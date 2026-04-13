@@ -59,7 +59,7 @@ const analyticsScript = `
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX', {
+  gtag('config', 'G-R0GTWK83NS', {
     page_path: window.location.pathname,
   });
 `;
@@ -75,7 +75,7 @@ export default function RootLayout({
 				{/* Google Analytics */}
 				<Script
 					strategy='afterInteractive'
-					src={`https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX`} // Replace with your Google Analytics ID
+					src={`https://www.googletagmanager.com/gtag/js?id=G-R0GTWK83NS`} // Replace with your Google Analytics ID
 				/>
 				<Script
 					id='google-analytics'
