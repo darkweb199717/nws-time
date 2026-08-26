@@ -72,8 +72,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head suppressHydrationWarning>
-		
-		  <meta name="google-adsense-account" content="ca-pub-6870906266533914"/>
 				{/* Google Analytics */}
 				<Script
 					strategy='afterInteractive'
@@ -91,11 +89,16 @@ export default function RootLayout({
 					name='google-site-verification'
 					content='XXXXXXXXXXXXXX' // Replace with your Google Search Console verification code
 				/>
-				{/* AdSense */}
+				{/* Adsterra - Social Bar / Popunder */}
 				<Script
 					strategy='afterInteractive'
-					src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7574125699858795' 
-					crossOrigin='anonymous'
+					src='https://gigglehiccup.com/d6/ff/db/d6ffdb892976655c0a4b66e37eec2de1.js'
+					async
+				/>
+				<Script
+					strategy='afterInteractive'
+					src='https://gigglehiccup.com/e1/fc/aa/e1fcaa8add06c83ce733f9b635e6bc50.js'
+					async
 				/>
 			</head>
       <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
