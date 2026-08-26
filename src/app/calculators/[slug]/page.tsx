@@ -2,11 +2,12 @@ import { getCalculatorBySlug } from '@/lib/calculatorData'
 import { notFound } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { Metadata } from 'next'
+import { AdsterraBanner } from '@/components/AdsterraBanner'
+import { AdsterraNativeBanner } from '@/components/AdsterraNativeBanner'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
-
 // Dynamically import all calculator components
 const calculatorComponents: Record<string, React.ComponentType<any>> = {
   'emi-calculator': dynamic(() => import('@/components/calculators/EMICalculator')),
@@ -28,35 +29,27 @@ const calculatorComponents: Record<string, React.ComponentType<any>> = {
   'buy-vs-rent': dynamic(() => import('@/components/calculators/BuyVsRentCalculator')),
   'freelancer-income': dynamic(() => import('@/components/calculators/FreelancerIncomeCalculator')),
 }
-
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const calculator = getCalculatorBySlug(params.slug)
-
   if (!calculator) {
     return { title: 'Calculator not found' }
   }
-
   return {
     title: `${calculator.name} - Finance Calculator`,
     description: calculator.description,
   }
 }
-
 export default async function CalculatorPage(props: Props) {
   const params = await props.params
   const calculator = getCalculatorBySlug(params.slug)
-
   if (!calculator) {
     notFound()
   }
-
   const CalculatorComponent = calculatorComponents[calculator.slug]
-
   if (!CalculatorComponent) {
     notFound()
   }
-
   return (
     <div className="min-h-screen bg-background py-8">
       <div className="max-w-6xl mx-auto px-4">
@@ -73,8 +66,23 @@ export default async function CalculatorPage(props: Props) {
           </div>
         </div>
 
+        {/* Ad: leaderboard banner, under header */}
+        <div className="flex justify-center mb-8">
+          <AdsterraBanner adKey="374162b38ed7db45b875813aa8ac794f" width={728} height={90} />
+        </div>
+
         {/* Calculator Component */}
         <CalculatorComponent />
+
+        {/* Ad: native banner, after calculator results */}
+        <div className="mt-10">
+          <AdsterraNativeBanner />
+        </div>
+
+        {/* Ad: 300x250 banner, bottom of page */}
+        <div className="flex justify-center mt-8">
+          <AdsterraBanner adKey="9c36795877b25d6e50a06261bfe405ae" width={300} height={250} />
+        </div>
       </div>
     </div>
   )
