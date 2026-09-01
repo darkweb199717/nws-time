@@ -2,19 +2,19 @@
 
 import { useEffect } from 'react'
 
-export default function Adsterra160x300() {
+export default function Adsterra300x250() {
   useEffect(() => {
     const optionsScript = document.createElement('script')
 
     optionsScript.type = 'text/javascript'
     optionsScript.innerHTML =
-      "atOptions = { 'key' : '0a52956e4b44dc62256d148f9fcf966b', 'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {} };"
+      "atOptions = { 'key' : '9c36795877b25d6e50a06261bfe405ae', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };"
 
     const adScript = document.createElement('script')
     adScript.type = 'text/javascript'
-    adScript.src = 'https://gigglehiccup.com/0a52956e4b44dc62256d148f9fcf966b/invoke.js'
+    adScript.src = 'https://gigglehiccup.com/9c36795877b25d6e50a06261bfe405ae/invoke.js'
 
-    const container = document.getElementById('adsterra-160x300-container')
+    const container = document.getElementById('adsterra-300x250-container')
 
     if (container) {
       container.appendChild(optionsScript)
@@ -28,12 +28,12 @@ export default function Adsterra160x300() {
   }, [])
 
   return (
-    <div className="flex justify-center px-4 py-6 overflow-hidden">
+    <div className="w-full flex justify-center px-4 py-6 overflow-hidden">
       <div
-        id="adsterra-160x300-container"
+        id="adsterra-300x250-container"
         style={{
-          width: '160px',
-          minHeight: '300px',
+          width: '300px',
+          minHeight: '250px',
           maxWidth: '100%',
         }}
       />
