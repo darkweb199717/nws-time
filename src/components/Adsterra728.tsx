@@ -1,4 +1,4 @@
-```tsx id="q0k9vw"
+```text
 'use client'
 
 import { useEffect } from 'react'
@@ -19,10 +19,8 @@ export default function Adsterra728() {
     `
 
     const adScript = document.createElement('script')
-
     adScript.type = 'text/javascript'
-    adScript.src =
-      'https://gigglehiccup.com/374162b38ed7db45b875813aa8ac794f/invoke.js'
+    adScript.src = 'https://gigglehiccup.com/374162b38ed7db45b875813aa8ac794f/invoke.js'
     adScript.async = true
 
     const container = document.getElementById('adsterra-728-container')
