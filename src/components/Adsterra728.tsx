@@ -1,4 +1,4 @@
-```tsx
+```tsx id="q0k9vw"
 'use client'
 
 import { useEffect } from 'react'
