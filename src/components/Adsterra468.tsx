@@ -1,4 +1,3 @@
-```tsx
 'use client'
 
 import { useEffect } from 'react'
@@ -41,4 +40,3 @@ export default function Adsterra468() {
     </div>
   )
 }
-```
