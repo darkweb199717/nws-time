@@ -1,4 +1,3 @@
-```tsx
 'use client'
 
 import { useState, useMemo } from 'react'
@@ -13,7 +12,6 @@ import { Input } from '@/components/ui/input'
 import { X, ArrowRight, TrendingUp, Zap, Shield, BarChart3, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import { SITE_NAME } from '@/lib/constant'
-import Script from 'next/script'
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
@@ -48,16 +46,13 @@ export default function Home() {
             >
               <span className="text-sm font-semibold text-primary">18 Financial Tools at Your Fingertips</span>
             </motion.div>
-
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent leading-tight">
               Master Your Finances
             </h1>
-
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
               The all-in-one financial calculator suite designed to help you make smarter financial decisions. 
               From loans and investments to retirement planning and tax calculations.
             </p>
-
             <motion.div
               className="flex flex-col sm:flex-row gap-4 justify-center"
               initial={{ opacity: 0, y: 20 }}
@@ -69,7 +64,6 @@ export default function Home() {
                   Explore Calculators <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-
               <Link href="/about">
                 <Button variant="outline" className="px-8 h-12 text-base">
                   Learn More
@@ -103,40 +97,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Adsterra 728x90 Banner */}
-      <div className="w-full flex justify-center px-4 py-6 overflow-hidden">
-        <div
-          id="adsterra-728x90"
-          className="flex justify-center items-center"
-          style={{
-            width: '728px',
-            minHeight: '90px',
-            maxWidth: '100%',
-          }}
-        >
-          <Script
-            id="adsterra-728x90-options"
-            strategy="afterInteractive"
-          >
-            {`
-              atOptions = {
-                'key' : '374162b38ed7db45b875813aa8ac794f',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-              };
-            `}
-          </Script>
-
-          <Script
-            id="adsterra-728x90-script"
-            src="https://gigglehiccup.com/374162b38ed7db45b875813aa8ac794f/invoke.js"
-            strategy="afterInteractive"
-          />
-        </div>
-      </div>
-
       {/* Calculators Section - NOW ON TOP */}
       <div id="calculators" className="px-4 py-16 md:py-24">
         <div className="max-w-7xl mx-auto">
@@ -153,84 +113,81 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Search and Filter */}
-          <div className="mb-8 space-y-4">
-            <div className="relative">
-              <Input
-                placeholder="Search calculators by name or feature..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-12 pl-4 text-base"
-              />
-
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-3 p-1 hover:bg-muted rounded-md transition-colors"
-                >
-                  <X className="w-5 h-5 text-muted-foreground" />
-                </button>
-              )}
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={selectedCategory === null ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(null)}
-                className="rounded-full"
+        {/* Search and Filter */}
+        <div className="mb-8 space-y-4">
+          <div className="relative">
+            <Input
+              placeholder="Search calculators by name or feature..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="h-12 pl-4 text-base"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-3 p-1 hover:bg-muted rounded-md transition-colors"
               >
-                All
-              </Button>
-
-              {categories.map(category => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? 'default' : 'outline'}
-                  onClick={() => setSelectedCategory(category)}
-                  className="rounded-full"
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
+                <X className="w-5 h-5 text-muted-foreground" />
+              </button>
+            )}
           </div>
 
-          {/* Calculators Grid */}
-          {filteredCalculators.length > 0 ? (
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant={selectedCategory === null ? 'default' : 'outline'}
+              onClick={() => setSelectedCategory(null)}
+              className="rounded-full"
             >
-              {filteredCalculators.map((calculator, index) => (
-                <CalculatorCard key={calculator.id} calculator={calculator} index={index} />
-              ))}
-            </motion.div>
-          ) : (
-            <motion.div
-              className="text-center py-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              <h3 className="text-lg font-semibold mb-2">No calculators found</h3>
-              <p className="text-muted-foreground mb-4">
-                Try adjusting your search or filters
-              </p>
-
+              All
+            </Button>
+            {categories.map(category => (
               <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchQuery('')
-                  setSelectedCategory(null)
-                }}
+                key={category}
+                variant={selectedCategory === category ? 'default' : 'outline'}
+                onClick={() => setSelectedCategory(category)}
+                className="rounded-full"
               >
-                Clear Filters
+                {category}
               </Button>
-            </motion.div>
-          )}
+            ))}
+          </div>
+        </div>
+
+        {/* Calculators Grid */}
+        {filteredCalculators.length > 0 ? (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            {filteredCalculators.map((calculator, index) => (
+              <CalculatorCard key={calculator.id} calculator={calculator} index={index} />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            className="text-center py-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <h3 className="text-lg font-semibold mb-2">No calculators found</h3>
+            <p className="text-muted-foreground mb-4">
+              Try adjusting your search or filters
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchQuery('')
+                setSelectedCategory(null)
+              }}
+            >
+              Clear Filters
+            </Button>
+          </motion.div>
+        )}
         </div>
       </div>
 
@@ -259,35 +216,30 @@ export default function Home() {
               description="Real-time calculations with industry-standard financial formulas"
               index={0}
             />
-
             <FeatureCard
               icon={Zap}
               title="Instant Results"
               description="Get results instantly as you type without any delays"
               index={1}
             />
-
             <FeatureCard
               icon={Shield}
               title="100% Private"
               description="Your financial data stays private and is never stored"
               index={2}
             />
-
             <FeatureCard
               icon={BarChart3}
               title="Visual Reports"
               description="Interactive charts and graphs to visualize your calculations"
               index={3}
             />
-
             <FeatureCard
               icon={CheckCircle}
               title="Easy to Use"
               description="Intuitive interface designed for everyone, no financial expertise needed"
               index={4}
             />
-
             <FeatureCard
               icon={ArrowRight}
               title="Mobile Friendly"
@@ -337,11 +289,9 @@ export default function Home() {
                   >
                     {item.step}
                   </motion.div>
-
                   <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
                   <p className="text-muted-foreground">{item.description}</p>
                 </div>
-
                 {i < 2 && (
                   <div className="hidden md:block absolute top-6 -right-4 text-primary">
                     <ArrowRight className="w-6 h-6" />
@@ -378,14 +328,12 @@ export default function Home() {
               role="Software Engineer"
               index={0}
             />
-
             <Testimonial
               quote="I used the SIP calculator to plan my investment strategy. Great tool for making informed financial decisions."
               author="Priya Sharma"
               role="Financial Consultant"
               index={1}
             />
-
             <Testimonial
               quote="The retirement calculator helped me understand my financial goals better. Simple yet powerful!"
               author="Amit Patel"
@@ -407,21 +355,16 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Make Better Financial Decisions?
-            </h2>
-
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Make Better Financial Decisions?</h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Start using our financial calculators today. No signup required, completely free, and 100% private.
             </p>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="#calculators">
                 <Button className="px-8 h-12 text-base bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 group">
                   Start Calculating <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-
               <Link href="/contact">
                 <Button variant="outline" className="px-8 h-12 text-base">
                   Get in Touch
@@ -434,4 +377,3 @@ export default function Home() {
     </div>
   )
 }
-```
