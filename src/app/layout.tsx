@@ -82,7 +82,6 @@ export default function RootLayout({
           strategy="afterInteractive"
           src="https://www.googletagmanager.com/gtag/js?id=G-R0GTWK83NS"
         />
-
         <Script
           id="google-analytics"
           strategy="afterInteractive"
@@ -90,22 +89,38 @@ export default function RootLayout({
             __html: analyticsScript,
           }}
         />
-
+        
+        {/* Adsterra Ads */}
+        {/* Code 1 - Popunder */}
+        <Script
+          src="https://gigglehiccup.com/d6/ff/db/d6ffdb892976655c0a4b66e37eec2de1.js"
+          strategy="afterInteractive"
+        />
+        
+        {/* Code 2 - Social Bar */}
+        <Script
+          src="https://gigglehiccup.com/e1/fc/aa/e1fcaa8add06c83ce733f9b635e6bc50.js"
+          strategy="afterInteractive"
+        />
+        
+        {/* Code 3 - Smartlink */}
+        <Script
+          src="https://gigglehiccup.com/jv2pn3zma?key=5018f41b2c4250c25cb19a84f1118813"
+          strategy="afterInteractive"
+        />
+        
         {/* Google Search Console */}
         <meta
           name="google-site-verification"
           content="XXXXXXXXXXXXXX"
         />
       </head>
-
       <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <AppNavbar />
-
           <main className="pt-20 flex-grow">
             {children}
           </main>
-
           <Footer />
         </ThemeProvider>
       </body>
