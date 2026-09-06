@@ -4,55 +4,60 @@ import { ThemeProvider } from 'next-themes'
 import { AppNavbar } from '@/components/AppNavbar'
 import { Footer } from '@/components/Footer'
 import './globals.css'
-import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from '@/lib/constant'
+import {
+  SITE_AUTHOR,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  SITE_URL,
+} from '@/lib/constant'
 import Script from 'next/script'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geist = Geist({ subsets: ['latin'] })
+const _geistMono = Geist_Mono({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
   keywords: [
-		"finance calculator",
-		"loan calculator",
-		"investment calculator",
-		"retirement calculator",
-		"tax calculator",
-		"emi calculator",
-		"sip calculator",
-		"online financial calculator",
-		"financial planning tool",
-    "free financial calculator",
-    "debt calculator",
-    "gst calculator",
-    "loan comparison calculator",
-    "rd calculator",
-    "fd calculator",
-    "retirement calculator",
-    "salary calculator",
-	],
+    'finance calculator',
+    'loan calculator',
+    'investment calculator',
+    'retirement calculator',
+    'tax calculator',
+    'emi calculator',
+    'sip calculator',
+    'online financial calculator',
+    'financial planning tool',
+    'free financial calculator',
+    'debt calculator',
+    'gst calculator',
+    'loan comparison calculator',
+    'rd calculator',
+    'fd calculator',
+    'retirement calculator',
+    'salary calculator',
+  ],
   authors: [{ name: SITE_AUTHOR }],
-	publisher: SITE_AUTHOR,
-	openGraph: {
-		type: "website",
-		locale: "en_US",
-		url: SITE_URL,
-		title: SITE_TITLE,
-		description: SITE_DESCRIPTION,
-		images: [
-			{
-				url: "/og-image.png",
-				width: 1200,
-				height: 630,
-				alt: SITE_TITLE,
-			},
-		],
-	},
-	robots: "index, follow",
-	alternates: {
-		canonical: SITE_URL,
-	},
+  publisher: SITE_AUTHOR,
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: SITE_URL,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: SITE_TITLE,
+      },
+    ],
+  },
+  robots: 'index, follow',
+  alternates: {
+    canonical: SITE_URL,
+  },
 }
 
 const analyticsScript = `
@@ -62,7 +67,7 @@ const analyticsScript = `
   gtag('config', 'G-R0GTWK83NS', {
     page_path: window.location.pathname,
   });
-`;
+`
 
 export default function RootLayout({
   children,
@@ -72,41 +77,35 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head suppressHydrationWarning>
-				{/* Google Analytics */}
-				<Script
-					strategy='afterInteractive'
-					src={`https://www.googletagmanager.com/gtag/js?id=G-R0GTWK83NS`} // Replace with your Google Analytics ID
-				/>
-				<Script
-					id='google-analytics'
-					strategy='afterInteractive'
-					dangerouslySetInnerHTML={{
-						__html: analyticsScript,
-					}}
-				/>
-				{/* Google Search Console */}
-				<meta
-					name='google-site-verification'
-					content='XXXXXXXXXXXXXX' // Replace with your Google Search Console verification code
-				/>
-				{/* Adsterra - Social Bar / Popunder */}
-				<Script
-					strategy='afterInteractive'
-					src='https://gigglehiccup.com/d6/ff/db/d6ffdb892976655c0a4b66e37eec2de1.js'
-					async
-				/>
-				<Script
-					strategy='afterInteractive'
-					src='https://gigglehiccup.com/e1/fc/aa/e1fcaa8add06c83ce733f9b635e6bc50.js'
-					async
-				/>
-			</head>
+        {/* Google Analytics */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-R0GTWK83NS"
+        />
+
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: analyticsScript,
+          }}
+        />
+
+        {/* Google Search Console */}
+        <meta
+          name="google-site-verification"
+          content="XXXXXXXXXXXXXX"
+        />
+      </head>
+
       <body className="font-sans antialiased bg-background text-foreground flex flex-col min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <AppNavbar />
+
           <main className="pt-20 flex-grow">
             {children}
           </main>
+
           <Footer />
         </ThemeProvider>
       </body>
