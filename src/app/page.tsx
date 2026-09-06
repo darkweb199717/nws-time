@@ -504,6 +504,9 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Adsterra Code 4 Banner */}
+      <AdsterraCodeBanner />
+
     </div>
   )
 }
