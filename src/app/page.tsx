@@ -19,6 +19,7 @@ import Adsterra320 from '@/components/Adsterra320'
 import Adsterra160x600 from '@/components/Adsterra160x600'
 import Adsterra160x300 from '@/components/Adsterra160x300'
 import Adsterra300x250 from '@/components/Adsterra300x250'
+import AdsterraCodeBanner from '@/components/Adsterra_CodeBanner'
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('')
