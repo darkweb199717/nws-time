@@ -1,11 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, DollarSign, Clock, Percent } from 'lucide-react'
+
+import Adsterra728 from '@/components/Adsterra728'
+import Adsterra300x250 from '@/components/Adsterra300x250'
+import Adsterra320 from '@/components/Adsterra320'
+import AdsterraCodeBanner from '@/components/Adsterra_CodeBanner'
 
 export default function FreelancerIncomeCalculator() {
   const [hourlyRate, setHourlyRate] = useState('500')
@@ -28,95 +34,97 @@ export default function FreelancerIncomeCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <Card className="lg:col-span-1 p-6 border-border/50">
-        <h2 className="text-xl font-bold mb-6">Income Details</h2>
-        <div className="space-y-6">
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Hourly Rate ($)</Label>
-            <Input type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} className="h-10" />
-          </div>
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Hours per Week</Label>
-            <Input type="number" value={hoursPerWeek} onChange={(e) => setHoursPerWeek(e.target.value)} className="h-10" />
-          </div>
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Weeks per Year</Label>
-            <Input type="number" value={weeksPerYear} onChange={(e) => setWeeksPerYear(e.target.value)} className="h-10" />
-          </div>
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Annual Expenses ($)</Label>
-            <Input type="number" value={expenses} onChange={(e) => setExpenses(e.target.value)} className="h-10" />
-          </div>
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Estimated Tax Rate (%)</Label>
-            <Input type="number" value={taxRate} onChange={(e) => setTaxRate(e.target.value)} className="h-10" />
-          </div>
-        </div>
-      </Card>
+    <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <motion.div className="text-center space-y-2" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <h1 className="text-3xl md:text-4xl font-bold">Freelancer Income Calculator</h1>
+        <p className="text-muted-foreground text-base max-w-xl mx-auto">Calculate your actual take-home income after taxes and expenses as a freelancer.</p>
+      </motion.div>
 
-      <div className="lg:col-span-2 space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20">
-            <div className="text-sm text-muted-foreground mb-1">Gross Annual Income</div>
-            <div className="text-3xl font-bold">${grossAnnual.toLocaleString()}</div>
+      <div className="hidden md:block"><Adsterra728 /></div>
+      <div className="block md:hidden"><Adsterra320 /></div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        <motion.div className="xl:col-span-1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <Card className="p-6 border-border/50 space-y-5 sticky top-24">
+            <h2 className="text-lg font-semibold">Income Details</h2>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5 text-primary" />Hourly Rate ($)</Label>
+              <Input type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} className="h-10" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-primary" />Hours per Week</Label>
+              <Input type="number" value={hoursPerWeek} onChange={(e) => setHoursPerWeek(e.target.value)} className="h-10" />
+              <input type="range" min="1" max="80" step="1" value={hoursPerWeek} onChange={(e) => setHoursPerWeek(e.target.value)} className="w-full accent-primary" />
+              <div className="flex justify-between text-xs text-muted-foreground"><span>1hr</span><span className="font-medium text-foreground">{hoursPerWeek}hrs</span><span>80hr</span></div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><Clock className="w-3.5 h-3.5 text-primary" />Weeks per Year</Label>
+              <Input type="number" value={weeksPerYear} onChange={(e) => setWeeksPerYear(e.target.value)} className="h-10" />
+              <input type="range" min="1" max="52" step="1" value={weeksPerYear} onChange={(e) => setWeeksPerYear(e.target.value)} className="w-full accent-primary" />
+              <div className="flex justify-between text-xs text-muted-foreground"><span>1wk</span><span className="font-medium text-foreground">{weeksPerYear}wks</span><span>52wk</span></div>
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5 text-primary" />Annual Expenses ($)</Label>
+              <Input type="number" value={expenses} onChange={(e) => setExpenses(e.target.value)} className="h-10" />
+            </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><Percent className="w-3.5 h-3.5 text-primary" />Tax Rate (%)</Label>
+              <Input type="number" value={taxRate} onChange={(e) => setTaxRate(e.target.value)} className="h-10" />
+              <input type="range" min="0" max="50" step="1" value={taxRate} onChange={(e) => setTaxRate(e.target.value)} className="w-full accent-primary" />
+              <div className="flex justify-between text-xs text-muted-foreground"><span>0%</span><span className="font-medium text-foreground">{taxRate}%</span><span>50%</span></div>
+            </div>
+            <div className="hidden xl:block pt-2"><Adsterra300x250 /></div>
           </Card>
-          <Card className="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
-            <div className="text-sm text-muted-foreground mb-1">Net Monthly Income</div>
-            <div className="text-3xl font-bold">${monthlyNet.toLocaleString('en-IN', {maximumFractionDigits: 0})}</div>
-          </Card>
+        </motion.div>
+
+        <div className="xl:col-span-3 space-y-6">
+          <motion.div className="space-y-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { label: 'Gross Annual Income', value: `$${grossAnnual.toLocaleString()}`, bg: 'from-blue-500/10 to-cyan-500/10', border: 'border-blue-500/20', text: 'text-blue-500' },
+                { label: 'Net Monthly Income', value: `$${monthlyNet.toLocaleString('en-IN', {maximumFractionDigits: 0})}`, bg: 'from-emerald-500/10 to-green-500/10', border: 'border-emerald-500/20', text: 'text-emerald-500' },
+              ].map((item, index) => (
+                <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                  <Card className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}>
+                    <div className="text-sm text-muted-foreground mb-1">{item.label}</div>
+                    <div className={`text-2xl md:text-3xl font-bold ${item.text}`}>{item.value}</div>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+
+            <Card className="p-5 border-border/50">
+              <h3 className="text-base font-semibold mb-4">Income Breakdown</h3>
+              <div className="space-y-3">
+                {[
+                  { label: 'Hourly Rate', value: `$${parseInt(hourlyRate).toLocaleString()}` },
+                  { label: 'Hours × Weeks', value: `${hoursPerWeek}hrs × ${weeksPerYear}wks` },
+                  { label: 'Gross Annual Income', value: `$${grossAnnual.toLocaleString()}` },
+                  { label: `Taxes (${taxRate}%)`, value: `-$${tax.toLocaleString('en-IN', {maximumFractionDigits: 0})}`, red: true },
+                  { label: 'Annual Expenses', value: `-$${parseInt(expenses).toLocaleString()}`, red: true },
+                  { label: 'Net Annual Income', value: `$${netIncome.toLocaleString('en-IN', {maximumFractionDigits: 0})}` },
+                  { label: 'Net Monthly Income', value: `$${monthlyNet.toLocaleString('en-IN', {maximumFractionDigits: 0})}` },
+                ].map((item, i) => (
+                  <div key={i} className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0">
+                    <span className="text-muted-foreground">{item.label}</span>
+                    <span className={`font-medium ${item.red ? 'text-red-500' : ''}`}>{item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+
+            <Button onClick={handleCopy} className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+              {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+              {copied ? 'Copied to Clipboard!' : 'Copy Results'}
+            </Button>
+            <div className="block xl:hidden"><Adsterra300x250 /></div>
+          </motion.div>
         </div>
-
-        <Card className="p-6 border-border/50">
-          <h3 className="text-lg font-semibold mb-4">Income Breakdown</h3>
-          <div className="space-y-4">
-            <div className="flex justify-between pb-3 border-b border-border/50">
-              <div>
-                <div className="text-muted-foreground text-sm">Hourly Rate</div>
-                <div className="font-semibold">${parseInt(hourlyRate).toLocaleString()}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-muted-foreground">Hours/Week</div>
-                <div className="font-semibold">{hoursPerWeek}</div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-muted-foreground">Weeks/Year</div>
-                <div className="font-semibold">{weeksPerYear}</div>
-              </div>
-            </div>
-
-            <div className="flex justify-between pb-3 border-b border-border/50">
-              <span className="text-muted-foreground">Gross Annual Income</span>
-              <span className="font-semibold">${grossAnnual.toLocaleString()}</span>
-            </div>
-
-            <div className="flex justify-between pb-3 border-b border-border/50">
-              <span className="text-muted-foreground">Taxes ({taxRate}%)</span>
-              <span className="font-semibold text-red-500">-${tax.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
-            </div>
-
-            <div className="flex justify-between pb-3 border-b border-border/50">
-              <span className="text-muted-foreground">Annual Expenses</span>
-              <span className="font-semibold text-red-500">-${parseInt(expenses).toLocaleString()}</span>
-            </div>
-
-            <div className="flex justify-between pt-2 bg-muted/50 p-3 rounded-lg">
-              <span className="font-semibold">Net Annual Income</span>
-              <span className="text-primary font-bold">${netIncome.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
-            </div>
-
-            <div className="flex justify-between pt-2 bg-primary/10 p-3 rounded-lg border border-primary/30">
-              <span className="font-semibold">Net Monthly Income</span>
-              <span className="text-primary font-bold">${monthlyNet.toLocaleString('en-IN', {maximumFractionDigits: 0})}</span>
-            </div>
-          </div>
-        </Card>
-
-        <Button onClick={handleCopy} className="w-full bg-gradient-to-r from-primary to-accent">
-          {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-          {copied ? 'Copied!' : 'Copy Results'}
-        </Button>
       </div>
+
+      <div className="hidden md:block"><Adsterra728 /></div>
+      <div className="block md:hidden"><Adsterra320 /></div>
+      <AdsterraCodeBanner />
     </div>
   )
 }
