@@ -20,103 +20,326 @@ export default function InflationCalculator() {
   const [years, setYears] = useState('10')
   const [copied, setCopied] = useState(false)
 
-  const result = amount && rate && years ? calculateInflation(parseInt(amount), parseFloat(rate), parseInt(years)) : null
+  const result =
+    amount && rate && years
+      ? calculateInflation(
+          parseInt(amount),
+          parseFloat(rate),
+          parseInt(years)
+        )
+      : null
 
   const handleCopy = () => {
     if (result) {
-      const text = `Inflation Impact:\nPresent Value: $${result.presentValue.toLocaleString()}\nInflation Rate: ${result.inflationRate}%\nYears: ${result.years}\nFuture Value: $${result.futureValue.toLocaleString()}\nPurchasing Power Loss: $${result.purchasingPowerLoss.toLocaleString()}`
+      const text = `Inflation Impact:
+Present Value: $${result.presentValue.toLocaleString()}
+Inflation Rate: ${result.inflationRate}%
+Years: ${result.years}
+Future Value: $${result.futureValue.toLocaleString()}
+Purchasing Power Loss: $${result.purchasingPowerLoss.toLocaleString()}`
+
       navigator.clipboard.writeText(text)
       setCopied(true)
+
       setTimeout(() => setCopied(false), 2000)
     }
   }
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
-      <motion.div className="text-center space-y-2" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <h1 className="text-3xl md:text-4xl font-bold">Inflation Calculator</h1>
-        <p className="text-muted-foreground text-base max-w-xl mx-auto">See how inflation erodes your purchasing power over time and plan accordingly.</p>
+
+      {/* Page Header */}
+      <motion.div
+        className="text-center space-y-2"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold">
+          Inflation Calculator
+        </h1>
+
+        <p className="text-muted-foreground text-base max-w-xl mx-auto">
+          See how inflation erodes your purchasing power over time and plan
+          accordingly.
+        </p>
       </motion.div>
 
-      <div className="hidden md:block"><Adsterra728 /></div>
-      <div className="block md:hidden"><Adsterra320 /></div>
+      {/* Desktop: 728x90 */}
+      <div className="hidden md:block">
+        <Adsterra728 />
+      </div>
 
+      {/* Mobile: 320x50 */}
+      <div className="block md:hidden">
+        <Adsterra320 />
+      </div>
+
+      {/* Main Calculator Layout */}
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        <motion.div className="xl:col-span-1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+
+        {/* Calculator Inputs */}
+        <motion.div
+          className="xl:col-span-1"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Card className="p-6 border-border/50 space-y-6 sticky top-24">
-            <h2 className="text-lg font-semibold">Inflation Details</h2>
+
+            <h2 className="text-lg font-semibold">
+              Inflation Details
+            </h2>
+
+            {/* Present Value */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5 text-primary" />Present Value ($)</Label>
-              <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="h-10" />
-              <input type="range" min="1000" max="10000000" step="1000" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full accent-primary" />
-              <div className="flex justify-between text-xs text-muted-foreground"><span>$1K</span><span className="font-medium text-foreground">${parseInt(amount||'0').toLocaleString()}</span><span>$1Cr</span></div>
+              <Label className="text-sm font-medium flex items-center gap-1">
+                <DollarSign className="w-3.5 h-3.5 text-primary" />
+                Present Value ($)
+              </Label>
+
+              <Input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="h-10"
+              />
+
+              <input
+                type="range"
+                min="1000"
+                max="10000000"
+                step="1000"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full accent-primary"
+              />
+
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>$1K</span>
+                <span className="font-medium text-foreground">
+                  ${parseInt(amount || '0').toLocaleString()}
+                </span>
+                <span>$1Cr</span>
+              </div>
             </div>
+
+            {/* Inflation Rate */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1"><Percent className="w-3.5 h-3.5 text-primary" />Inflation Rate (p.a.)</Label>
-              <Input type="number" step="0.1" value={rate} onChange={(e) => setRate(e.target.value)} className="h-10" />
-              <input type="range" min="1" max="20" step="0.1" value={rate} onChange={(e) => setRate(e.target.value)} className="w-full accent-primary" />
-              <div className="flex justify-between text-xs text-muted-foreground"><span>1%</span><span className="font-medium text-foreground">{rate}%</span><span>20%</span></div>
+              <Label className="text-sm font-medium flex items-center gap-1">
+                <Percent className="w-3.5 h-3.5 text-primary" />
+                Inflation Rate (p.a.)
+              </Label>
+
+              <Input
+                type="number"
+                step="0.1"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                className="h-10"
+              />
+
+              <input
+                type="range"
+                min="1"
+                max="20"
+                step="0.1"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                className="w-full accent-primary"
+              />
+
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>1%</span>
+                <span className="font-medium text-foreground">
+                  {rate}%
+                </span>
+                <span>20%</span>
+              </div>
             </div>
+
+            {/* Years */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-primary" />Years</Label>
-              <Input type="number" value={years} onChange={(e) => setYears(e.target.value)} className="h-10" />
-              <input type="range" min="1" max="50" step="1" value={years} onChange={(e) => setYears(e.target.value)} className="w-full accent-primary" />
-              <div className="flex justify-between text-xs text-muted-foreground"><span>1yr</span><span className="font-medium text-foreground">{years} yrs</span><span>50yrs</span></div>
+              <Label className="text-sm font-medium flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-primary" />
+                Years
+              </Label>
+
+              <Input
+                type="number"
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                className="h-10"
+              />
+
+              <input
+                type="range"
+                min="1"
+                max="50"
+                step="1"
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                className="w-full accent-primary"
+              />
+
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>1yr</span>
+                <span className="font-medium text-foreground">
+                  {years} yrs
+                </span>
+                <span>50yrs</span>
+              </div>
             </div>
-            <div className="hidden xl:block pt-2"><Adsterra300x250 /></div>
+
+            {/* Desktop 300x250 */}
+            <div className="hidden xl:block pt-2">
+              <Adsterra300x250 />
+            </div>
+
           </Card>
         </motion.div>
 
+        {/* Results */}
         <div className="xl:col-span-3 space-y-6">
+
           {result && (
-            <motion.div className="space-y-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+
+              {/* Result Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
                 {[
-                  { label: 'Future Value Needed', value: `$${result.futureValue.toLocaleString()}`, sub: `At ${result.inflationRate}% inflation`, bg: 'from-orange-500/10 to-red-500/10', border: 'border-orange-500/20', text: 'text-orange-500' },
-                  { label: 'Purchasing Power Loss', value: `$${result.purchasingPowerLoss.toLocaleString()}`, sub: `Over ${result.years} years`, bg: 'from-red-500/10 to-pink-500/10', border: 'border-red-500/20', text: 'text-red-500' },
+                  {
+                    label: 'Future Value Needed',
+                    value: `$${result.futureValue.toLocaleString()}`,
+                    sub: `At ${result.inflationRate}% inflation`,
+                    bg: 'from-orange-500/10 to-red-500/10',
+                    border: 'border-orange-500/20',
+                    text: 'text-orange-500',
+                  },
+                  {
+                    label: 'Purchasing Power Loss',
+                    value: `$${result.purchasingPowerLoss.toLocaleString()}`,
+                    sub: `Over ${result.years} years`,
+                    bg: 'from-red-500/10 to-pink-500/10',
+                    border: 'border-red-500/20',
+                    text: 'text-red-500',
+                  },
                 ].map((item, index) => (
-                  <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.1 }}>
-                    <Card className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}>
-                      <div className="text-sm text-muted-foreground mb-1">{item.label}</div>
-                      <div className={`text-2xl md:text-3xl font-bold ${item.text}`}>{item.value}</div>
-                      <div className="text-xs text-muted-foreground mt-1">{item.sub}</div>
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: index * 0.1,
+                    }}
+                  >
+                    <Card
+                      className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}
+                    >
+                      <div className="text-sm text-muted-foreground mb-1">
+                        {item.label}
+                      </div>
+
+                      <div
+                        className={`text-2xl md:text-3xl font-bold ${item.text}`}
+                      >
+                        {item.value}
+                      </div>
+
+                      <div className="text-xs text-muted-foreground mt-1">
+                        {item.sub}
+                      </div>
                     </Card>
                   </motion.div>
                 ))}
+
               </div>
 
+              {/* Impact Analysis */}
               <Card className="p-5 border-border/50">
-                <h3 className="text-base font-semibold mb-4">Impact Analysis</h3>
+                <h3 className="text-base font-semibold mb-4">
+                  Impact Analysis
+                </h3>
+
                 <div className="space-y-3">
                   {[
-                    { label: "Today's Buying Power", value: `$${result.presentValue.toLocaleString()}` },
-                    { label: 'Inflation Rate', value: `${result.inflationRate}% p.a.` },
-                    { label: 'Time Period', value: `${result.years} years` },
-                    { label: 'Future Money Needed', value: `$${result.futureValue.toLocaleString()}` },
-                    { label: 'Purchasing Power Loss', value: `$${result.purchasingPowerLoss.toLocaleString()}` },
-                    { label: 'Inflation Impact', value: `${((result.purchasingPowerLoss / result.presentValue) * 100).toFixed(1)}%` },
+                    {
+                      label: "Today's Buying Power",
+                      value: `$${result.presentValue.toLocaleString()}`,
+                    },
+                    {
+                      label: 'Inflation Rate',
+                      value: `${result.inflationRate}% p.a.`,
+                    },
+                    {
+                      label: 'Time Period',
+                      value: `${result.years} years`,
+                    },
+                    {
+                      label: 'Future Money Needed',
+                      value: `$${result.futureValue.toLocaleString()}`,
+                    },
+                    {
+                      label: 'Purchasing Power Loss',
+                      value: `$${result.purchasingPowerLoss.toLocaleString()}`,
+                    },
+                    {
+                      label: 'Inflation Impact',
+                      value: `${(
+                        (result.purchasingPowerLoss /
+                          result.presentValue) *
+                        100
+                      ).toFixed(1)}%`,
+                    },
                   ].map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0">
-                      <span className="text-muted-foreground">{item.label}</span>
-                      <span className="font-medium">{item.value}</span>
+                    <div
+                      key={i}
+                      className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0"
+                    >
+                      <span className="text-muted-foreground">
+                        {item.label}
+                      </span>
+
+                      <span className="font-medium">
+                        {item.value}
+                      </span>
                     </div>
                   ))}
                 </div>
               </Card>
 
-              <Button onClick={handleCopy} className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
-                {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-                {copied ? 'Copied to Clipboard!' : 'Copy Results'}
+              {/* Copy Results */}
+              <Button
+                onClick={handleCopy}
+                className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 mr-2" />
+                ) : (
+                  <Copy className="w-4 h-4 mr-2" />
+                )}
+
+                {copied
+                  ? 'Copied to Clipboard!'
+                  : 'Copy Results'}
               </Button>
-              <div className="block xl:hidden"><Adsterra300x250 /></div>
+
             </motion.div>
           )}
+
         </div>
       </div>
 
-      <div className="hidden md:block"><Adsterra728 /></div>
-      <div className="block md:hidden"><Adsterra320 /></div>
+      {/* Bottom Ad */}
       <AdsterraCodeBanner />
+
     </div>
   )
 }
