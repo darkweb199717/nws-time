@@ -1,12 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { calculateIncomeTax } from '@/lib/calculations'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, DollarSign, Receipt } from 'lucide-react'
+
+import Adsterra728 from '@/components/Adsterra728'
+import Adsterra300x250 from '@/components/Adsterra300x250'
+import Adsterra320 from '@/components/Adsterra320'
+import AdsterraCodeBanner from '@/components/Adsterra_CodeBanner'
 
 export default function IncomeTaxCalculator() {
   const [income, setIncome] = useState('1000000')
@@ -25,70 +31,85 @@ export default function IncomeTaxCalculator() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <Card className="lg:col-span-1 p-6 border-border/50">
-        <h2 className="text-xl font-bold mb-6">Income Details</h2>
-        <div className="space-y-6">
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Annual Income ($)</Label>
-            <Input type="number" value={income} onChange={(e) => setIncome(e.target.value)} className="h-10" />
-          </div>
-          <div>
-            <Label className="text-sm font-medium mb-2 block">Deductions (80C, etc) ($)</Label>
-            <Input type="number" value={deductions} onChange={(e) => setDeductions(e.target.value)} className="h-10" />
-          </div>
-        </div>
-      </Card>
+    <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <motion.div className="text-center space-y-2" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <h1 className="text-3xl md:text-4xl font-bold">Income Tax Calculator</h1>
+        <p className="text-muted-foreground text-base max-w-xl mx-auto">Calculate your income tax liability based on your annual income and eligible deductions.</p>
+      </motion.div>
 
-      {result && (
-        <div className="lg:col-span-2 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20">
-              <div className="text-sm text-muted-foreground mb-1">Total Tax</div>
-              <div className="text-3xl font-bold">${result.totalTax.toLocaleString()}</div>
-            </Card>
-            <Card className="p-6 bg-gradient-to-br from-green-500/10 to-emerald-500/10 border-green-500/20">
-              <div className="text-sm text-muted-foreground mb-1">After Tax Income</div>
-              <div className="text-3xl font-bold">${result.afterTaxIncome.toLocaleString()}</div>
-            </Card>
-          </div>
+      <div className="hidden md:block"><Adsterra728 /></div>
+      <div className="block md:hidden"><Adsterra320 /></div>
 
-          <Card className="p-6 border-border/50">
-            <h3 className="text-lg font-semibold mb-4">Tax Breakdown</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between pb-2 border-b border-border/50">
-                <span>Annual Income</span>
-                <span className="font-semibold">${result.annualIncome.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between pb-2 border-b border-border/50">
-                <span>Deductions (80C, etc)</span>
-                <span className="font-semibold">${result.deductions.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between pb-2 border-b border-border/50">
-                <span>Taxable Income</span>
-                <span className="font-semibold">${result.taxableIncome.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between pb-2 border-b border-border/50">
-                <span>Income Tax (Slab)</span>
-                <span className="font-semibold">${result.tax.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between pb-2 border-b border-border/50">
-                <span>Health & Education Cess (4%)</span>
-                <span className="font-semibold">${result.cess.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between pt-2 bg-muted/50 p-3 rounded-lg">
-                <span className="font-semibold">Total Tax Liability</span>
-                <span className="text-primary font-bold">${result.totalTax.toLocaleString()}</span>
-              </div>
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        <motion.div className="xl:col-span-1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <Card className="p-6 border-border/50 space-y-6 sticky top-24">
+            <h2 className="text-lg font-semibold">Income Details</h2>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5 text-primary" />Annual Income ($)</Label>
+              <Input type="number" value={income} onChange={(e) => setIncome(e.target.value)} className="h-10" />
+              <input type="range" min="100000" max="10000000" step="100000" value={income} onChange={(e) => setIncome(e.target.value)} className="w-full accent-primary" />
+              <div className="flex justify-between text-xs text-muted-foreground"><span>$1L</span><span className="font-medium text-foreground">${parseInt(income||'0').toLocaleString()}</span><span>$1Cr</span></div>
             </div>
+            <div className="space-y-2">
+              <Label className="text-sm font-medium flex items-center gap-1"><Receipt className="w-3.5 h-3.5 text-primary" />Deductions (80C etc.)</Label>
+              <Input type="number" value={deductions} onChange={(e) => setDeductions(e.target.value)} className="h-10" />
+              <input type="range" min="0" max="500000" step="10000" value={deductions} onChange={(e) => setDeductions(e.target.value)} className="w-full accent-primary" />
+              <div className="flex justify-between text-xs text-muted-foreground"><span>$0</span><span className="font-medium text-foreground">${parseInt(deductions||'0').toLocaleString()}</span><span>$5L</span></div>
+            </div>
+            <div className="hidden xl:block pt-2"><Adsterra300x250 /></div>
           </Card>
+        </motion.div>
 
-          <Button onClick={handleCopy} className="w-full bg-gradient-to-r from-primary to-accent">
-            {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-            {copied ? 'Copied!' : 'Copy Results'}
-          </Button>
+        <div className="xl:col-span-3 space-y-6">
+          {result && (
+            <motion.div className="space-y-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {[
+                  { label: 'Total Tax Liability', value: `$${result.totalTax.toLocaleString()}`, bg: 'from-red-500/10 to-orange-500/10', border: 'border-red-500/20', text: 'text-red-500' },
+                  { label: 'After Tax Income', value: `$${result.afterTaxIncome.toLocaleString()}`, bg: 'from-emerald-500/10 to-green-500/10', border: 'border-emerald-500/20', text: 'text-emerald-500' },
+                ].map((item, index) => (
+                  <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.1 }}>
+                    <Card className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}>
+                      <div className="text-sm text-muted-foreground mb-1">{item.label}</div>
+                      <div className={`text-2xl md:text-3xl font-bold ${item.text}`}>{item.value}</div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+
+              <Card className="p-5 border-border/50">
+                <h3 className="text-base font-semibold mb-4">Tax Breakdown</h3>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Annual Income', value: `$${result.annualIncome.toLocaleString()}` },
+                    { label: 'Deductions (80C etc.)', value: `-$${result.deductions.toLocaleString()}` },
+                    { label: 'Taxable Income', value: `$${result.taxableIncome.toLocaleString()}` },
+                    { label: 'Income Tax (Slab)', value: `$${result.tax.toLocaleString()}` },
+                    { label: 'Health & Education Cess (4%)', value: `$${result.cess.toLocaleString()}` },
+                    { label: 'Total Tax Liability', value: `$${result.totalTax.toLocaleString()}` },
+                    { label: 'After Tax Income', value: `$${result.afterTaxIncome.toLocaleString()}` },
+                  ].map((item, i) => (
+                    <div key={i} className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0">
+                      <span className="text-muted-foreground">{item.label}</span>
+                      <span className="font-medium">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
+              <Button onClick={handleCopy} className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
+                {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+                {copied ? 'Copied to Clipboard!' : 'Copy Results'}
+              </Button>
+              <div className="block xl:hidden"><Adsterra300x250 /></div>
+            </motion.div>
+          )}
         </div>
-      )}
+      </div>
+
+      <div className="hidden md:block"><Adsterra728 /></div>
+      <div className="block md:hidden"><Adsterra320 /></div>
+      <AdsterraCodeBanner />
     </div>
   )
 }
