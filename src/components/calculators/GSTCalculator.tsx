@@ -19,98 +19,273 @@ export default function GSTCalculator() {
   const [rate, setRate] = useState('18')
   const [copied, setCopied] = useState(false)
 
-  const result = amount ? calculateGST(parseInt(amount), parseInt(rate)) : null
+  const result = amount
+    ? calculateGST(parseInt(amount), parseInt(rate))
+    : null
 
   const handleCopy = () => {
     if (result) {
-      const text = `GST Calculation:\nBase Amount: $${result.baseAmount.toLocaleString()}\nGST Rate: ${result.gstRate}%\nGST Amount: $${result.gstAmount.toLocaleString()}\nTotal Amount: $${result.totalAmount.toLocaleString()}`
+      const text = `GST Calculation:
+Base Amount: $${result.baseAmount.toLocaleString()}
+GST Rate: ${result.gstRate}%
+GST Amount: $${result.gstAmount.toLocaleString()}
+Total Amount: $${result.totalAmount.toLocaleString()}`
+
       navigator.clipboard.writeText(text)
       setCopied(true)
+
       setTimeout(() => setCopied(false), 2000)
     }
   }
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8 space-y-8">
-      <motion.div className="text-center space-y-2" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <h1 className="text-3xl md:text-4xl font-bold">GST Calculator</h1>
-        <p className="text-muted-foreground text-base max-w-xl mx-auto">Quickly calculate GST on any amount using standard tax slabs of 5%, 12%, 18%, or 28%.</p>
+
+      {/* Page Header */}
+      <motion.div
+        className="text-center space-y-2"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold">
+          GST Calculator
+        </h1>
+
+        <p className="text-muted-foreground text-base max-w-xl mx-auto">
+          Quickly calculate GST on any amount using standard tax slabs of
+          5%, 12%, 18%, or 28%.
+        </p>
       </motion.div>
 
-      <div className="hidden md:block"><Adsterra728 /></div>
-      <div className="block md:hidden"><Adsterra320 /></div>
+      {/* Desktop 728x90 */}
+      <div className="hidden md:block">
+        <Adsterra728 />
+      </div>
 
+      {/* Mobile 320x50 */}
+      <div className="block md:hidden">
+        <Adsterra320 />
+      </div>
+
+      {/* Main Calculator Layout */}
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        <motion.div className="xl:col-span-1" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+
+        {/* Input Panel */}
+        <motion.div
+          className="xl:col-span-1"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Card className="p-6 border-border/50 space-y-6 sticky top-24">
-            <h2 className="text-lg font-semibold">Amount & Rate</h2>
+
+            <h2 className="text-lg font-semibold">
+              Amount & Rate
+            </h2>
+
+            {/* Base Amount */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1"><DollarSign className="w-3.5 h-3.5 text-primary" />Base Amount ($)</Label>
-              <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} className="h-10" />
-              <input type="range" min="100" max="1000000" step="100" value={amount} onChange={(e) => setAmount(e.target.value)} className="w-full accent-primary" />
-              <div className="flex justify-between text-xs text-muted-foreground"><span>$100</span><span className="font-medium text-foreground">${parseInt(amount||'0').toLocaleString()}</span><span>$10L</span></div>
+              <Label className="text-sm font-medium flex items-center gap-1">
+                <DollarSign className="w-3.5 h-3.5 text-primary" />
+                Base Amount ($)
+              </Label>
+
+              <Input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="h-10"
+              />
+
+              <input
+                type="range"
+                min="100"
+                max="1000000"
+                step="100"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="w-full accent-primary"
+              />
+
+              <div className="flex justify-between text-xs text-muted-foreground">
+                <span>$100</span>
+
+                <span className="font-medium text-foreground">
+                  ${parseInt(amount || '0').toLocaleString()}
+                </span>
+
+                <span>$10L</span>
+              </div>
             </div>
+
+            {/* GST Rate */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium mb-1.5 block">GST Rate</Label>
-              <select value={rate} onChange={(e) => setRate(e.target.value)} className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm">
-                <option value="5">5% — Essential Items</option>
-                <option value="12">12% — General Goods</option>
-                <option value="18">18% — Standard Rate</option>
-                <option value="28">28% — Luxury Items</option>
+              <Label className="text-sm font-medium mb-1.5 block">
+                GST Rate
+              </Label>
+
+              <select
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm"
+              >
+                <option value="5">
+                  5% — Essential Items
+                </option>
+
+                <option value="12">
+                  12% — General Goods
+                </option>
+
+                <option value="18">
+                  18% — Standard Rate
+                </option>
+
+                <option value="28">
+                  28% — Luxury Items
+                </option>
               </select>
             </div>
-            <div className="hidden xl:block pt-2"><Adsterra300x250 /></div>
+
+            {/* Desktop 300x250 */}
+            <div className="hidden xl:block pt-2">
+              <Adsterra300x250 />
+            </div>
+
           </Card>
         </motion.div>
 
+        {/* Results */}
         <div className="xl:col-span-3 space-y-6">
+
           {result && (
-            <motion.div className="space-y-6" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.div
+              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+
+              {/* Result Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
                 {[
-                  { label: 'Base Amount', value: `$${result.baseAmount.toLocaleString()}`, bg: 'from-blue-500/10 to-cyan-500/10', border: 'border-blue-500/20', text: 'text-blue-500' },
-                  { label: 'GST Amount', value: `$${result.gstAmount.toLocaleString()}`, bg: 'from-orange-500/10 to-red-500/10', border: 'border-orange-500/20', text: 'text-orange-500' },
-                  { label: 'Total Amount', value: `$${result.totalAmount.toLocaleString()}`, bg: 'from-emerald-500/10 to-green-500/10', border: 'border-emerald-500/20', text: 'text-emerald-500' },
+                  {
+                    label: 'Base Amount',
+                    value: `$${result.baseAmount.toLocaleString()}`,
+                    bg: 'from-blue-500/10 to-cyan-500/10',
+                    border: 'border-blue-500/20',
+                    text: 'text-blue-500',
+                  },
+                  {
+                    label: 'GST Amount',
+                    value: `$${result.gstAmount.toLocaleString()}`,
+                    bg: 'from-orange-500/10 to-red-500/10',
+                    border: 'border-orange-500/20',
+                    text: 'text-orange-500',
+                  },
+                  {
+                    label: 'Total Amount',
+                    value: `$${result.totalAmount.toLocaleString()}`,
+                    bg: 'from-emerald-500/10 to-green-500/10',
+                    border: 'border-emerald-500/20',
+                    text: 'text-emerald-500',
+                  },
                 ].map((item, index) => (
-                  <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.1 }}>
-                    <Card className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}>
-                      <div className="text-sm text-muted-foreground mb-1">{item.label}</div>
-                      <div className={`text-2xl md:text-3xl font-bold ${item.text}`}>{item.value}</div>
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: index * 0.1,
+                    }}
+                  >
+                    <Card
+                      className={`p-5 bg-gradient-to-br ${item.bg} border ${item.border}`}
+                    >
+                      <div className="text-sm text-muted-foreground mb-1">
+                        {item.label}
+                      </div>
+
+                      <div
+                        className={`text-2xl md:text-3xl font-bold ${item.text}`}
+                      >
+                        {item.value}
+                      </div>
                     </Card>
                   </motion.div>
                 ))}
+
               </div>
 
+              {/* GST Breakdown */}
               <Card className="p-5 border-border/50">
-                <h3 className="text-base font-semibold mb-4">GST Breakdown</h3>
+                <h3 className="text-base font-semibold mb-4">
+                  GST Breakdown
+                </h3>
+
                 <div className="space-y-3">
                   {[
-                    { label: 'Base Amount', value: `$${result.baseAmount.toLocaleString()}` },
-                    { label: 'GST Rate', value: `${result.gstRate}%` },
-                    { label: 'GST Amount', value: `$${result.gstAmount.toLocaleString()}` },
-                    { label: 'Total (Inc. GST)', value: `$${result.totalAmount.toLocaleString()}` },
+                    {
+                      label: 'Base Amount',
+                      value: `$${result.baseAmount.toLocaleString()}`,
+                    },
+                    {
+                      label: 'GST Rate',
+                      value: `${result.gstRate}%`,
+                    },
+                    {
+                      label: 'GST Amount',
+                      value: `$${result.gstAmount.toLocaleString()}`,
+                    },
+                    {
+                      label: 'Total (Inc. GST)',
+                      value: `$${result.totalAmount.toLocaleString()}`,
+                    },
                   ].map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0">
-                      <span className="text-muted-foreground">{item.label}</span>
-                      <span className="font-medium">{item.value}</span>
+                    <div
+                      key={i}
+                      className="flex justify-between text-sm py-1.5 border-b border-border/30 last:border-0"
+                    >
+                      <span className="text-muted-foreground">
+                        {item.label}
+                      </span>
+
+                      <span className="font-medium">
+                        {item.value}
+                      </span>
                     </div>
                   ))}
                 </div>
               </Card>
 
-              <Button onClick={handleCopy} className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90">
-                {copied ? <Check className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
-                {copied ? 'Copied to Clipboard!' : 'Copy Results'}
+              {/* Copy Results */}
+              <Button
+                onClick={handleCopy}
+                className="w-full h-11 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 mr-2" />
+                ) : (
+                  <Copy className="w-4 h-4 mr-2" />
+                )}
+
+                {copied
+                  ? 'Copied to Clipboard!'
+                  : 'Copy Results'}
               </Button>
-              <div className="block xl:hidden"><Adsterra300x250 /></div>
+
             </motion.div>
           )}
+
         </div>
       </div>
 
-      <div className="hidden md:block"><Adsterra728 /></div>
-      <div className="block md:hidden"><Adsterra320 /></div>
+      {/* Separate Code Banner */}
       <AdsterraCodeBanner />
+
     </div>
   )
 }
